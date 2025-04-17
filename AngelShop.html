@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Angel Shop Rezz2024240104</title>
+  <style>
+    body { font-family: sans-serif; margin: 0; padding: 0; background: #f2f2f2; }
+    header { background: #5b2245; padding: 10px; color: white; }
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover { text-decoration: underline; }
+
+    .container { padding: 20px; }
+    .hidden { display: none; }
+
+    form input, form textarea, form select {
+      width: 300px; padding: 8px; margin-bottom: 10px;
+    }
+
+    form label { font-weight: bold; display: block; margin-top: 10px; }
+    button { padding: 10px 20px; }
+
+    .product-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .product {
+      background: white;
+      padding: 10px;
+      border: 1px solid #ccc;
+      width: 180px;
+      text-align: center;
+    }
+
+    .product img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+    }
+
+    .banner {
+      background: #b4e0ff;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 14px;
+    }
+
+    .login-page, .content { padding: 20px; max-width: 800px; margin: auto; }
+  </style>
+</head>
+<body>
+
+<!-- Login -->
+<div class="login-page" id="login-page">
+  <h2>Login ke Angel Shop RezzSTR</h2>
+  <form onsubmit="return login()">
+    <label>Username:</label>
+    <input type="text" id="username" required>
+    <label>Password:</label>
+    <input type="password" id="password" required>
+    <br>
+    <button type="submit">Login</button>
+  </form>
+</div>
+
+<!-- Setelah login -->
+<div class="hidden" id="main-page">
+  <header>
+    <nav>
+      <a href="#" onclick="showPage('home')">Beranda</a>
+      <a href="#" onclick="showPage('pendaftaran')">Daftar Member</a>
+      <a href="#" onclick="showPage('pembelian')">Pembelian</a>
+      <a href="#" onclick="logout()">Logout</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <!-- Beranda -->
+    <div id="home" class="content">
+      <div class="banner">
+        <h3>Belanja Online di “Angel Shop RezzSTR”</h3>
+        <p>Selamat datang di website Toko Online “Angel Shop RezzSTR”<br>
+          Disini kamu dapat mencari peralatan dapur yang dibuat dari logam.<br>
+          Terima kasih telah berkunjung, semoga berkah dan barokah!</p>
+      </div>
+      <h3>Produk Yang Tersedia</h3>
+      <div class="product-grid">
+        <div class="product">
+          <img src="kompor.jpg" alt="Kompor">
+          <p>Kompor Besar<br>Rp. 35.000</p>
+          <button>Detail</button>
+        </div>
+        <div class="product">
+          <img src="tatakankompor.jpg" alt="Tatakan">
+          <p>Tatakan Kompor Kecil<br>Rp. 21.000</p>
+          <button>Detail</button>
+        </div>
+        <div class="product">
+          <img src="tutuppanci.jpg" alt="Tutup">
+          <p>Tutup Panci<br>Rp. 30.000</p>
+          <button>Detail</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pendaftaran Member -->
+    <div id="pendaftaran" class="content hidden">
+      <h3>Form Pendaftaran Member</h3>
+      <form>
+        <label>Nama</label>
+        <input type="text">
+        <label>No HP</label>
+        <input type="text">
+        <label>Email</label>
+        <input type="email">
+        <label>Alamat</label>
+        <textarea></textarea>
+        <label>Jenis Kelamin</label>
+        <input type="radio" name="gender"> Laki-laki
+        <input type="radio" name="gender"> Perempuan
+        <label>Umur</label>
+        <input type="number">
+        <label>Status</label>
+        <select>
+          <option>Pelajar</option>
+          <option>Mahasiswa</option>
+          <option>Umum</option>
+        </select>
+        <br>
+        <button type="submit">Daftar</button>
+      </form>
+    </div>
+
+    <!-- Pembelian Produk -->
+    <div id="pembelian" class="content hidden">
+      <h3>Form Pembelian Produk</h3>
+      <form>
+        <label>Nama Barang</label>
+        <input type="text" id="barang">
+        <label>Harga (Rp)</label>
+        <input type="number" id="harga">
+        <label>Jumlah</label>
+        <input type="number" id="jumlah">
+        <label>Total Bayar</label>
+        <input type="text" id="total" readonly>
+        <br>
+        <button type="button" onclick="hitungTotal()">Hitung Total</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  function login() {
+    const u = document.getElementById('username').value;
+    const p = document.getElementById('password').value;
+    if (u === 'AdminRezzSTR' && p === '1234') {
+      document.getElementById('login-page').classList.add('hidden');
+      document.getElementById('main-page').classList.remove('hidden');
+      showPage('home');
+    } else {
+      alert("Username atau password salah!");
+    }
+    return false;
+  }
+  
+
+  function showPage(page) {
+    const pages = ['home', 'pendaftaran', 'pembelian'];
+    pages.forEach(p => {
+      document.getElementById(p).classList.add('hidden');
+    });
+    document.getElementById(page).classList.remove('hidden');
+  }
+
+  function logout() {
+    location.reload();
+  }
+
+  function hitungTotal() {
+    const harga = parseFloat(document.getElementById('harga').value);
+    const jumlah = parseInt(document.getElementById('jumlah').value);
+    if (!isNaN(harga) && !isNaN(jumlah)) {
+      document.getElementById('total').value = harga * jumlah;
+    } else {
+      alert("Masukkan harga dan jumlah dengan benar.");
+    }
+  }
+</script>
+
+</body>
+</html>
